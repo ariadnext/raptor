@@ -267,6 +267,11 @@ SET(RAPTOR_SERIALIZER_JSON TRUE
 SET(RAPTOR_SERIALIZER_NQUADS TRUE
 	CACHE BOOL "Build N-Quads serializer.")
 
+SET(BUILD_TESTS TRUE
+	CACHE BOOL "Build test programs.")
+SET(BUILD_UTILS TRUE
+	CACHE BOOL "Build utilities (rdfdiff, rapper).")
+
 ################################################################
 
 CONFIGURE_FILE(
@@ -332,7 +337,10 @@ IF(CMAKE_GENERATOR MATCHES "Makefiles")
 ENDIF(CMAKE_GENERATOR MATCHES "Makefiles")
 
 SUBDIRS(src)
+
+IF(BUILD_UTILS)
 SUBDIRS(utils)
+ENDIF(BUILD_UTILS)
 
 ################################################################
 
@@ -422,6 +430,7 @@ ENDIF()
 	ADD_TEST(${TEST_NAME} ${CMAKE_COMMAND} -P test-${TEST_NAME}.cmake)
 ENDFUNCTION(RAPPER_RDFDIFF_TEST)
 
+IF(BUILD_TESTS)
 SUBDIRS(tests/feeds)
 SUBDIRS(tests/grddl)
 SUBDIRS(tests/json)
@@ -431,5 +440,6 @@ SUBDIRS(tests/rdfa11)
 SUBDIRS(tests/rdfxml)
 SUBDIRS(tests/trig)
 #SUBDIRS(tests/turtle)	# TODO
+ENDIF(BUILD_TESTS)
 
 # end raptor/CMakeLists.txt
